@@ -31,6 +31,6 @@ for leap_data in leap_get['data']:
 leap_result = dict(leap=result_images)
 
 print('Writing output file ...')
-output_file = open('image_metadata.json','w')
+output_file = open('image-metadata.json','w')
 json.dump(leap_result, output_file, indent=2)
 print('Image Metadata file written successfully!')
