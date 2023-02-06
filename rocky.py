@@ -2,10 +2,10 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-version_regex = '\d\.\d/$'
+version_regex = '\d\.\d'
 baseurls = ['https://download.rockylinux.org/pub/rocky/','https://dl.rockylinux.org/vault/rocky/']
 images_path = 'images/x86_64/'
-image_name_regex = 'Rocky-[8|9]-GenericCloud-Base[-|\.]('+version_regex+'\-(\d{8}\.\d)|latest)\.x86_64.qcow2$'
+image_name_regex = 'Rocky-[8|9]-GenericCloud(-Base|)[-|\.]('+version_regex+'\-(\d{8}\.\d)|latest)\.x86_64.qcow2$'
 
 version_list = []
 for baseurl in baseurls:
@@ -15,7 +15,7 @@ for baseurl in baseurls:
   
   for version in versions:
     version_string = version.get('href')
-    match = re.match(version_regex, version_string)
+    match = re.match(version_regex+'/$', version_string)
     if match:
       version_list.append(baseurl+version_string+images_path)
   
@@ -30,7 +30,7 @@ for version_path in version_list:
   for image_name in version_soup.find_all('a'):
     name_match = re.match(image_name_regex, image_name.get('href'))
     if name_match:
-      matching_image_list.append(image_name.get('href'))
+      matching_image_list.append(version_path + image_name.get('href'))
 
-#for matching_name in matching_image_list:
- # print(matching_name)
+for matching_name in matching_image_list:
+  print(matching_name)
