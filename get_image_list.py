@@ -1,9 +1,19 @@
 import json
 import opensuse
+import rocky
+import ubuntu
 
-
-print('Writing output file ...')
+print('Writing output file ...\n---')
 output_file = open('image-metadata.json','w')
-json.dump(opensuse.get_suse_image_list(), output_file, indent=2)
+
+final_content = {"HarvesterImageCatalog":
+                 {
+                    **opensuse.get_suse_image_list() , 
+                    **rocky.get_rocky_image_list(),
+                    **ubuntu.get_ubuntu_image_list()
+                  }
+                }
+
+json.dump(final_content, output_file, indent=2)
 print('Image Metadata file written successfully!')
 

@@ -21,7 +21,7 @@ data = {'leap': {
 jstable = '?jsontable'
 
 def get_suse_image_list() :
-
+  print('Building OpenSUSE list ...')
   opensuse_result = dict()
   for distro in data:
     leap_get = requests.get(data[distro]['baseurl'] + '?jsontable').json()
@@ -38,7 +38,7 @@ def get_suse_image_list() :
             #print(leap_image['name'])
             match = re.match(data[distro]['regex'] , leap_image['name'])
             if match:
-              print(leap_image['name'])
+              #print(leap_image['name'])
               version_result = dict()
               try:
                 version_result['version'] = match[1]
@@ -53,5 +53,6 @@ def get_suse_image_list() :
               result_images.append(version_result)
 
     opensuse_result[distro] = result_images
+  print('Finished Building OpenSUSE image list!\n---')
   return opensuse_result
 
