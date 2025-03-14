@@ -4,8 +4,13 @@ import re
 
 data = {'leap': { 
           'baseurl':'https://download.opensuse.org/download/distribution/leap/', 
-          'regex':'openSUSE-Leap-([0-9\.]{4})-JeOS.x86_64-[0-9\.]{4}-OpenStack-Cloud-(.*).qcow2$',
+          'regex':'openSUSE-Leap-([0-9\.]{4})-JeOS.x86_64-[0-9\.]{4}-(OpenStack-)*Cloud-(.*).qcow2$',
           'shortName': 'OpenSUSE Leap JeOS'
+        },
+        'leap15.4+':{
+          'baseurl': 'https://download.opensuse.org/download/distribution/leap/',
+          'regex': 'openSUSE-Leap-([0-9\.]{4})-Minimal-VM.x86_64-(OpenStack-)*Cloud.qcow2$',
+          'shortName': 'OpenSUSE Leap Minimal'
         },
         'tumbleweed':{
           'baseurl': 'https://download.opensuse.org/tumbleweed/',
