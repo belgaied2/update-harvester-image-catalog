@@ -27,12 +27,14 @@ jobs:
         with:
           repository: belgaied2/harvester-cli
           sparse-checkout: image-metadata.json
+          path: harvester-cli
       - name: run image update script
         run: python get_image_list.py
       - name: commit and push
         run: |
           git config --global user.email "mohamed.belgaied@suse.com"
           git config --global user.name "Mohamed Belgaied"
+          cd harvester-cli
           git add image-metadata.json
           git commit -m "GH Action - update image metadata - ${{ steps.date.outputs.date }}"
           git push
