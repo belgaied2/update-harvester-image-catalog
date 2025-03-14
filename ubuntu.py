@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import re
 
 baseurl = 'https://cloud-images.ubuntu.com/minimal/releases/'
-version_line_regex = '\s*\d{4}-\d{2}-\d{2} \d{2}:\d{2}    -   Ubuntu (Minimal|Server) (\d{2}\.\d{2}) (LTS |)\([A-Za-z ]*\) (released|daily) builds\s*(\[END OF LIFE\]){0,1}$'
-filename_regex = 'ubuntu-\d{2}\.\d{2}-minimal-cloudimg-amd64.img'
+version_line_regex = r'\s*\d{4}-\d{2}-\d{2} \d{2}:\d{2}    -   Ubuntu (Minimal|Server) (\d{2}\.\d{2}) (LTS |)\([A-Za-z ]*\) (released|daily) builds\s*(\[END OF LIFE\]){0,1}$'
+filename_regex = r'ubuntu-\d{2}\.\d{2}-minimal-cloudimg-amd64.img'
 
 def get_ubuntu_image_list():
   print('Building Ubuntu list ...')

@@ -2,10 +2,10 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-version_regex = '\d\.\d'
+version_regex = r'\d\.\d'
 baseurls = ['https://download.rockylinux.org/pub/rocky/','https://dl.rockylinux.org/vault/rocky/']
 images_path = 'images/x86_64/'
-image_name_regex = 'Rocky-[8|9]-GenericCloud(-Base|)[-|\.]('+version_regex+'\-(\d{8}\.\d)|latest)\.x86_64.qcow2$'
+image_name_regex = r'Rocky-[8|9]-GenericCloud(-Base|)[-|\.]('+version_regex+'\-(\d{8}\.\d)|latest)\.x86_64.qcow2$'
 
 def get_rocky_image_list():
   print('Building RockyLinux list ...')
