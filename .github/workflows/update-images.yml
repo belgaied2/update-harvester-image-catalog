@@ -3,7 +3,7 @@ name: update-images
 on:
   schedule:
     - cron: '0 0 * * *'
-  workload_dispatch :
+  workflow_dispatch :
 
 jobs:
   update-images:
