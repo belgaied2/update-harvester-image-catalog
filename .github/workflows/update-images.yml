@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: checkout image-metadata.json
-        run: actions/checkout@v4
+        uses: actions/checkout@v4
         with:
           repository: belgaied2/harvester-cli
           sparse-checkout: image-metadata.json
