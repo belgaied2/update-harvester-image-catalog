@@ -4,22 +4,22 @@ import re
 
 data = {'leap': { 
           'baseurl':'https://download.opensuse.org/download/distribution/leap/', 
-          'regex':'openSUSE-Leap-([0-9\.]{4})-JeOS.x86_64-[0-9\.]{4}-(OpenStack-)*Cloud-(.*).qcow2$',
+          'regex': r'openSUSE-Leap-([0-9\.]{4})-JeOS.x86_64-[0-9\.]{4}-(OpenStack-)*Cloud-(.*).qcow2$',
           'shortName': 'OpenSUSE Leap JeOS'
         },
         'leap15.4+':{
           'baseurl': 'https://download.opensuse.org/download/distribution/leap/',
-          'regex': 'openSUSE-Leap-([0-9\.]{4})-Minimal-VM.x86_64-(OpenStack-)*Cloud.qcow2$',
+          'regex': r'openSUSE-Leap-([0-9\.]{4})-Minimal-VM.x86_64-(OpenStack-)*Cloud.qcow2$',
           'shortName': 'OpenSUSE Leap Minimal'
         },
         'tumbleweed':{
           'baseurl': 'https://download.opensuse.org/tumbleweed/',
-          'regex': 'openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2$',
+          'regex': r'openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2$',
           'shortName': 'OpenSUSE Tumbleweed'
         },
         'microos':{
           'baseurl': 'https://download.opensuse.org/tumbleweed/',
-          'regex': 'openSUSE-MicroOS.x86_64-OpenStack-Cloud.qcow2$',
+          'regex': r'openSUSE-MicroOS.x86_64-OpenStack-Cloud.qcow2$',
           'shortName': 'OpenSUSE MicroOS'
         }
 }
@@ -41,14 +41,19 @@ def get_suse_image_list() :
           #print(version_get.json()['data'])
           for leap_image in version_get.json()['data']:
             #print(leap_image['name'])
-            match = re.match(data[distro]['regex'] , leap_image['name'])
-            if match:
+            matchVersion = re.match(data[distro]['regex'] , leap_image['name'])
+            matchBuild = re.match('.*([B,b]uild.*).qcow2' , leap_image['name'])
+            if matchBuild:
+              build = matchBuild[1]
+            else:
+              build = 'current'
+            if matchVersion:
               #print(leap_image['name'])
               version_result = dict()
               try:
-                version_result['version'] = match[1]
-                version_result['build'] = match[2] 
-                version_result['shortName'] = data[distro]['shortName']+' '+match[1]
+                version_result['version'] = matchVersion[1]
+                version_result['build'] = build
+                version_result['shortName'] = data[distro]['shortName']+' '+matchVersion[1]
               except IndexError:
                 version_result['version'] = 'current'
                 version_result['build'] = 'current'

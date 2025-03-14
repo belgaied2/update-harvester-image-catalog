@@ -26,12 +26,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: belgaied2/harvester-cli
-          sparse-checkout: image-metadata.json
           path: harvester-cli
       - name: run image update script
         run: python get_image_list.py
       - name: commit and push
         run: |
+          mv image-metadata.json harvester-cli/image-metadata.json
           git config --global user.email "mohamed.belgaied@suse.com"
           git config --global user.name "Mohamed Belgaied"
           cd harvester-cli
