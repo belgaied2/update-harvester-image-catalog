@@ -1,0 +1,38 @@
+name: update-images
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workload_dispatch :
+
+jobs:
+  update-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: checkout image-metadata.json
+        run: actions/checkout@v4
+        with:
+          repository: belgaied2/harvester-cli
+          sparse-checkout: image-metadata.json
+      - name: run image update script
+        run: python get_image_list.py
+      - name: commit and push
+        run: |
+          git config --global user.email "mohamed.belgaied@suse.com"
+          git config --global user.name "Mohamed Belgaied"
+          git add image-metadata.json
+          git commit -m "GH Action - update image metadata - ${{ steps.date.outputs.date }}"
+          git push
