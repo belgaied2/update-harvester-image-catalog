@@ -27,6 +27,7 @@ jobs:
         with:
           repository: belgaied2/harvester-cli
           path: harvester-cli
+          token: ${{ secrets.GH_PAT }}
       - name: run image update script
         run: python get_image_list.py
       - name: commit and push
